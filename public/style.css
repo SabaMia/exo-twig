@@ -10,6 +10,7 @@ body{
     min-height: 100vh;
     position: relative;
     color: white;
+    font-family: 'Patrick Hand', cursive;
 }
 
 nav {
@@ -18,6 +19,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 
 }
 nav div{
