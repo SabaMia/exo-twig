@@ -1,19 +1,32 @@
-<!DOCTYPE html>
-<html>
+{# Création du dossier BASE qui va servir de layout à toutes les pages #}
+<!doctype html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
-
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href={{ asset('style.css') }}>
+        {# On créé des blocks à chaque fois qu'on veut insérer du contenu personnalisé selon l'article
+        puis on met un endblock pour fermer le block #}
+        <title>{% block metaTitle %}{% endblock metaTitle %}</title>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <nav>
+                <div>
+                    <img src={{ asset('media/logo.png') }} alt="logo" class="resp">
+                </div>
+                <div>
+                    <a href={{ path('listCategories',)}}><img src={{ asset('media/menu.png') }} alt="menu" class="resp"></a>
+
+                </div>
+            </nav>
+        </header>
+        {% block main %}
+        {# le contenu des articles contenu dans leurs balises main s'affichera ici #}
+        {% endblock main %}
+        <footer>
+        </footer>
     </body>
 </html>

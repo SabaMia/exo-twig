@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
@@ -36,27 +37,26 @@ class CategoryController extends AbstractController
     ];
 
 
-
-    /*
-     * @Route ('/', name="listArticles")
+    /**
+     * @Route ("/", name="listCategories")
      * création de la première page avec sa route et la fonction qui renvoie au fichier twig correspondant
      */
-    public function listArticles()
+    public function listCategories()
     {
-        return $this->render('list-articles.html.twig',[
-            'article' => $this-> articles
+        return $this->render('list-categories.html.twig',[
+            'categories' => $this-> categories
         ]);
     }
 
-    /*
-     * @Route ('/article/{id}', name="showArticle")
+    /**
+     * @Route ("/categorie/{id}", name="showCategories")
      * création de la deuxième page avec sa route et la fonction qui renvoie au fichier twig correspondant
      * on insère l'id à chaque fois que le contenu doit correspondre à celui de l'article sélectionné
      */
-    public function showArticles($id)
+    public function showCategories($id)
     {
-        return $this->render('show-article.html.twig',[
-                'article' => $this-> articles[$id]
+        return $this->render('show-categorie.html.twig',[
+                'categorie' => $this-> categories[$id]
         ]);
     }
 

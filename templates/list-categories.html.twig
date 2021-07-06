@@ -1,0 +1,26 @@
+{# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
+{% extends 'base.html.twig' %}
+
+{# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
+{% block metaTitle %}
+    Liste des categories
+{% endblock metaTitle %}
+
+{# j'insère un block pour la balise main puis je le ferme avec endblock #}
+{% block main %}
+    <h1 class="fsT">Liste des catégories</h1>
+    <main class="card">
+        {% for categorie in categories %}
+        <article class="lHeight50 category">
+            <a href={{ path('showCategories',{'id':categorie.id })}}><h1>{{ categorie.content }}</h1></a>
+            <h2>Categorie : "{{ categorie.title }}"</h2>
+            {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
+            {% if categorie.published == true %}
+                Article publié
+            {% else %}
+                Article non publié
+            {% endif %}
+        </article>
+        {% endfor %}
+    </main>
+{% endblock main %}
