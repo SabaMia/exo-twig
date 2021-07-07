@@ -1,0 +1,24 @@
+ {% extends 'base.html.twig' %}
+
+ {% block metaTitle %}
+ Liste des articles
+ {% endblock metaTitle %}
+
+ {% block main %}
+     <h1 class="fsT">Liste des articles</h1>
+     <main class="card">
+         {% for article in articles %}
+             <article class="lHeight50 category">
+                 <a href={{ path('articleShow',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
+                 <br>
+                 <h2>Contenu : "{{ article.content }}"</h2>
+                 {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
+                 {% if article.isPublished == true %}
+                    <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>
+                 {% else %}
+                     <p>Article non publié</p>
+                 {% endif %}
+             </article>
+         {% endfor %}
+     </main>
+ {% endblock main %}

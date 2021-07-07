@@ -52,12 +52,13 @@ a:hover{
 }
 
 .category{
-    width: 300px;
-    height: 300px;
+    width: 450px;
+    height: 450px;
     padding: 30px;
     border: 1px solid white;
     text-align: center;
-    margin: 50px 160px;
+    margin: 50px 50px;
+    overflow: scroll;
 }
 
 .card{
@@ -74,4 +75,8 @@ footer {
     text-align: center;
     font-size: 50px;
     padding-top: 50px;
+}
+
+main{
+    padding-left: 100px;
 }
