@@ -3,20 +3,14 @@
 
 {# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
 {% block metaTitle %}
-    {{ categorie.title }}
+    {{ category.title }}
 {% endblock metaTitle %}
 
 {% block main %}
     <main>
         <article class="center lHeight200">
-            <h1>Titre de l'article : "{{ categorie.content }}"</h1>
-            <h2>Categorie de l'article :{{ categorie.title }}</h2>
-            {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
-            {% if categorie.published == true %}
-                Article publié
-            {% else %}
-                Article non publié
-            {% endif %}
+            <h1>Catégorie: "{{ category.title }}"</h1>
+            <h2>Description de la catégorie :{{ category.description }}</h2>
         </article>
     </main>
 {% endblock main %}
