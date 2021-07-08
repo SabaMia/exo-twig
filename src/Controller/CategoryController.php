@@ -18,17 +18,17 @@ class CategoryController extends AbstractController
     public function listCategories(CategoryRepository $categoryRepository)
     {
         $categories = $categoryRepository->findAll();
-        return $this->render('list-categories.html.twig',[
+        return $this->render('list-category.html.twig',[
             'categories' => $categories
         ]);
     }
 
     /**
-     * @Route ("/category/{id}", name="showCategories")
+     * @Route ("/category/{id}", name="showCategory")
      * création de la deuxième page avec sa route et la fonction qui renvoie au fichier twig correspondant
      * on insère l'id à chaque fois que le contenu doit correspondre à celui de l'article sélectionné
      */
-    public function showCategories($id, CategoryRepository $categoryRepository)
+    public function showCategory($id, CategoryRepository $categoryRepository)
     {
         // afficher l'article avec à partir de son id (wilcard dans l'url))
         $category = $categoryRepository->find($id);
@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        return $this->render('show-categorie.html.twig',[
+        return $this->render('show-category.html.twig',[
                 'category' => $category
         ]);
     }

@@ -6,11 +6,17 @@
 
  {% block main %}
      <main>
-         <article class="center lHeight200">
+         <article class="center lHeight50">
              <h1>Titre de l'article : "{{ article.title }}"</h1>
              <br>
-             <h2>Contenu de l'article :{{ article.content }}</h2>
-             <h3>Catégorie de l'article : {{ article.category.title }}</h3>
+             <h2>Contenu de l'article : <br>{{ article.content }}</h2>
+             <br>
+             <a href={{ path('showCategory',{'id':article.category.id })}}><h1>Catégorie de l'article :
+                     {{ article.category.title }}</h1></a>
+
+             <a href={{ path('tagShow',{'id':article.tag.id })}}><h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
+                         {{ article.tag.title }}</span></a>
+
              {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
              {% if article.isPublished == true %}
                  <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>

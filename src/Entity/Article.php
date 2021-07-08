@@ -35,6 +35,32 @@ class Article
     private $creationDate;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="articles")
+     */
+    private $tag;
+
+    /**
+     * @return mixed
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param mixed $tag
+     */
+    public function setTags($tag): void
+    {
+        $this->tag = $tag;
+    }
+
+        /**
      * @return mixed
      */
     public function getCategory()
@@ -49,12 +75,6 @@ class Article
     {
         $this->category = $category;
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
-     */
-    private $category;
-
 
     /**
      * @return mixed

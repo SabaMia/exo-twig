@@ -11,8 +11,9 @@
              <article class="lHeight50 category">
                  <a href={{ path('articleShow',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
                  <br>
-                 <h2>Contenu : "{{ article.content }}"</h2>
-                 <h3>Catégorie de l'article : {{ article.category.title }}</h3>
+                 <h2>Contenu : <br> "{{ article.content }}"</h2>
+                 <a href={{ path('showCategory',{'id':article.category.id })}}><h3>Catégorie de l'article : {{ article.category.title }}</h3></a>
+                 <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">{{ article.tag.title }}</span></h3>
                  {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
                  {% if article.isPublished == true %}
                     <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>

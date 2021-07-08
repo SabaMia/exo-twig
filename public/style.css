@@ -6,7 +6,10 @@
 body{
     align-items: center;
     text-align: center;
-    background-color: black;
+    background: #C04848;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #480048, #C04848);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #480048, #C04848); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     min-height: 100vh;
     position: relative;
     color: white;
@@ -32,12 +35,12 @@ nav div{
 }
 
 .lHeight200{
-    font-size: 30px;
-    line-height: 200px;
+    font-size: 20px;
+    line-height: 50px;
 }
 
 .lHeight50{
-    font-size: 30px;
+    font-size: 20px;
     line-height: 50px;
 }
 
@@ -73,7 +76,7 @@ footer {
 
 .fsT{
     text-align: center;
-    font-size: 50px;
+    font-size: 20px;
     padding-top: 50px;
 }
 

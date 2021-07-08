@@ -10,7 +10,13 @@
     <main>
         <article class="center lHeight200">
             <h1>Catégorie: "{{ category.title }}"</h1>
-            <h2>Description de la catégorie :{{ category.description }}</h2>
+            <h2>{{ category.description }}</h2>
+            <br>
+            {% for article in category.articles %}
+                <a href={{ path('articleShow',{'id':article.id })}}>
+                <h1>{{ article.title }}</h1>
+                </a>
+            {% endfor %}
         </article>
     </main>
 {% endblock main %}
