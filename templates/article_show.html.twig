@@ -10,6 +10,7 @@
              <h1>Titre de l'article : "{{ article.title }}"</h1>
              <br>
              <h2>Contenu de l'article :{{ article.content }}</h2>
+             <h3>Catégorie de l'article : {{ article.category.title }}</h3>
              {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
              {% if article.isPublished == true %}
                  <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>

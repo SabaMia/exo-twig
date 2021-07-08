@@ -37,6 +37,28 @@ class Article
     /**
      * @return mixed
      */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     */
+    private $category;
+
+
+    /**
+     * @return mixed
+     */
     public function getCreationDate()
     {
         return $this->creationDate;
