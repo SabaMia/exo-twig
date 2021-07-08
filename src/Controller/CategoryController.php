@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
@@ -31,6 +32,12 @@ class CategoryController extends AbstractController
     {
         // afficher l'article avec à partir de son id (wilcard dans l'url))
         $category = $categoryRepository->find($id);
+
+        //Erreur 404 si quelqu'un essaye de rentrer un id qui n'existe pas
+        if (is_null($category)) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('show-categorie.html.twig',[
                 'category' => $category
         ]);
