@@ -27,6 +27,8 @@ class ArticleRepository extends ServiceEntityRepository
             ->select('article')
             ->where('article.content LIKE :term')
             ->setParameter('term', '%'.$term.'%')
+            //setParameter permet de sécuriser la recherche en évitant les injections SQl extérieures
+            // et vérifier ce qui a été tapé avant de valicer la requête
             ->getQuery();
         return $query->getResult();
         //ensuite il faut aller personnaliser le fichier twig pour afficher le résultat de la recheche

@@ -55,7 +55,7 @@ class ArticleController extends AbstractController
         return $this->render('article_search.html.twig',[
             'articles'=>$articles,
             'term'=>$term]);
-        //Ensuite on va modifier le fichier ArticleController pour créer la requête
+        //Ensuite on va modifier le fichier ArticleRepository pour créer la requête
     }
 
 
