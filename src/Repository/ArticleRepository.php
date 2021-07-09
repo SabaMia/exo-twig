@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,10 +26,18 @@ class ArticleRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('article');
         $query = $queryBuilder
             ->select('article')
+
+            ->leftJoin('article.category', 'category')
+            ->leftJoin('article.tag', 'tag')
+
             ->where('article.content LIKE :term')
+            ->orWhere('article.title LIKE :term')
+            ->orWhere('category.title LIKE :term')
+            ->orWhere('tag.title LIKE :term')
+
             ->setParameter('term', '%'.$term.'%')
             //setParameter permet de sécuriser la recherche en évitant les injections SQl extérieures
-            // et vérifier ce qui a été tapé avant de valicer la requête
+            // et vérifier ce qui a été tapé avant de valider la requête
             ->getQuery();
         return $query->getResult();
         //ensuite il faut aller personnaliser le fichier twig pour afficher le résultat de la recheche

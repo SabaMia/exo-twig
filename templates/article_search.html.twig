@@ -7,12 +7,14 @@ Votre recherche
 
 {% block main %}
     <h1>Il y a {{ articles | length }} article(s) correspondant(s) à : "{{ term }}"</h1>
+    <br>
     <div class="articles-container">
         {% for article in articles %}
             {% if article.isPublished %}
                 <article class="article">
                     <h2>{{ article.title | upper }}</h2>
                     <p>{{ article.content }}</p>
+                    <br>
                     <a href="{{ path('articleShow', {'id': article.id }) }}">Voir plus</a>
                 </article>
             {% endif %}
