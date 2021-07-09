@@ -20,6 +20,12 @@
                 <div>
                     <img src={{ asset('media/logo.png') }} alt="logo" class="resp">
                 </div>
+                {# insertion d'un formalaire avec une méthode get afin de récupérer le mot tapé dans la recherche #}
+                <form action="{{ path('search') }}" method="get">
+                    <input type="text" name="q" placeholder="recherche...">
+                    <input type="submit" value="Rechercher">
+                </form>
+                {# Ensuite il faut aller modifier la route search dans ArticleController #}
                 <div>
                     <a href={{ path('articleList',)}}><img src={{ asset('media/menu.png') }} alt="menu" class="resp"></a>
 

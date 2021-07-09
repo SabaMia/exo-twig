@@ -6,7 +6,7 @@ Votre recherche
 
 
 {% block main %}
-    <h1>Il y a {{ articles | length }} articles correspondant à : "{{ term }}"</h1>
+    <h1>Il y a {{ articles | length }} article(s) correspondant(s) à : "{{ term }}"</h1>
     <div class="articles-container">
         {% for article in articles %}
             {% if article.isPublished %}
