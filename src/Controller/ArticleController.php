@@ -36,10 +36,27 @@ class ArticleController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-
         return $this->render('article_show.html.twig', [
             'article' => $article
         ]);
     }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function search(ArticleRepository $articleRepository)
+    {
+        //On commence par tester la route
+        //dump('search');die;
+        //On fait un test avec mot présent dans un article
+        $term = 'rider';
+        $articles = $articleRepository
+            ->searchByTerm($term);
+        return $this->render('article_search.html.twig',[
+            'articles'=>$articles,
+            'term'=>$term]);
+        //Ensuite on va modifier le fichier ArticleController pour créer la requête
+    }
+
 
 }

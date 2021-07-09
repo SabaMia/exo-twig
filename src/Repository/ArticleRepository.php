@@ -19,6 +19,20 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function searchByTerm($term)
+    {
+        //Création de la requête pour la fonction recherche
+        $queryBuilder = $this->createQueryBuilder('article');
+        $query = $queryBuilder
+            ->select('article')
+            ->where('article.content LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+            ->getQuery();
+        return $query->getResult();
+        //ensuite il faut aller personnaliser le fichier twig pour afficher le résultat de la recheche
+
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

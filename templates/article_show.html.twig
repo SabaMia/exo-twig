@@ -14,7 +14,8 @@
              <a href={{ path('showCategory',{'id':article.category.id })}}><h1>Catégorie de l'article :
                      {{ article.category.title }}</h1></a>
 
-             <a href={{ path('tagShow',{'id':article.tag.id })}}><h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
+             <a href={{ path('tagShow',{'id':article.tag.id })}}>
+                 <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
                          {{ article.tag.title }}</span></a>
 
              {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
