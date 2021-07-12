@@ -17,22 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/articles/update", name="articleUpdate")
-     */
-    // Pour créer une update, on créé une route puis la fonction
-    public function updateArticle(EntityManagerInterface $entityManager, ArticleRepository $articleRepository)
-    {
-        //On indique quel article il va récupérer grace au repository article et son id
-        $article = $articleRepository->find(7);
-        // pour modifier le titre
-        $article ->setTitle('update du titre');
-        // persist pour pré sauvegarder et flush pour valider
-        $entityManager->persist($article);
-        $entityManager->flush();
-        dump('ok update titre'); die;
-    }
-
-    /**
      * @Route("/articles/insert", name="articleInsert")
      */
     public function insertArticle(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository,
@@ -76,6 +60,37 @@ class ArticleController extends AbstractController
         $entityManager->flush();
 
         dump('ok'); die;
+    }
+
+    /**
+     * @Route("/articles/update/{id}", name="articleUpdate")
+     */
+    // Pour créer une update, on créé une route puis la fonction
+    public function updateArticle($id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository)
+    {
+        //On indique quel article il va récupérer grace au repository article et son id
+        $article = $articleRepository->find($id);
+        // pour modifier le titre
+        $article ->setTitle('update du titre');
+        // persist pour pré sauvegarder et flush pour valider
+        $entityManager->persist($article);
+        $entityManager->flush();
+        dump('ok update titre'); die;
+    }
+
+    /**
+     * @Route("/articles/delete/{id}", name="articleDelete")
+     */
+    //Pour supprimer un article à partir de l'id dans l'URL
+    public function deleteArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    {
+        //le repository pour récupérer l'article à partir de son id dans l'URL
+        $article = $articleRepository->find($id);
+        //puis les entity manager pour supprimer (remove) puis valider (flush)
+        $entityManager->remove($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('articleList');
     }
 
     /**
