@@ -4,7 +4,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Tag;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
+     * @Route("/articles/update", name="articleUpdate")
+     */
+    // Pour créer une update, on créé une route puis la fonction
+    public function updateArticle(EntityManagerInterface $entityManager, ArticleRepository $articleRepository)
+    {
+        //On indique quel article il va récupérer grace au repository article et son id
+        $article = $articleRepository->find(7);
+        // pour modifier le titre
+        $article ->setTitle('update du titre');
+        // persist pour pré sauvegarder et flush pour valider
+        $entityManager->persist($article);
+        $entityManager->flush();
+        dump('ok update titre'); die;
+    }
+
+    /**
      * @Route("/articles/insert", name="articleInsert")
      */
-    public function insertArticle(EntityManagerInterface $entityManager)
+    public function insertArticle(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository,
+        TagRepository $tagRepository)
     {
         //On utilise l'entité article pur créer un nouvel article en BDD
         //une instance de l'entité = un enregistrement dans la bdd
@@ -28,7 +48,28 @@ class ArticleController extends AbstractController
         $article->setIsPublished(true);
         $article->setCreationDate(new \DateTime('NOW'));
 
-        // On récupère l'entitté créée ici et on la pré sauvegarde
+        // je récupère la catégorie dont l'id est 1 en bdd
+        // doctrine me créé une instance de l'entité category avec les infos de la catégorie de la bdd
+        $category = $categoryRepository->find(1);
+        // j'associé l'instance de l'entité categorie récupérée, à l'instane de l'entité article que je suis
+        // en train de créer
+        $article->setCategory($category);
+
+        $tag = $tagRepository->findOneBy(['title' => 'info']);
+
+        if (is_null($tag)) {
+            $tag = new Tag();
+            $tag->setTitle("nouveau tag");
+            $tag->setColor("purple");
+        }
+
+        $entityManager->persist($tag);
+
+        $article->setTags($tag);
+
+
+
+        // On récupère l'entité créée ici et on la pré sauvegarde
         $entityManager->persist($article);
 
         // une fois toutes les entités pré sauvegardées on les insère en bdd
