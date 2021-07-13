@@ -12,19 +12,19 @@ class FrontCategoryController extends AbstractController
 {
 
     /**
-     * @Route ("/categories", name="listCategories")
+     * @Route ("/admin/categories", name="admin_category_list")
      * création de la première page avec sa route et la fonction qui renvoie au fichier twig correspondant
      */
     public function listCategories(CategoryRepository $categoryRepository)
     {
         $categories = $categoryRepository->findAll();
-        return $this->render('front/category_list.twig',[
+        return $this->render('admin/admin_category_list.twig',[
             'categories' => $categories
         ]);
     }
 
     /**
-     * @Route ("/category/{id}", name="category_show")
+     * @Route ("admin/category/{id}", name="admin_category_show")
      * création de la deuxième page avec sa route et la fonction qui renvoie au fichier twig correspondant
      * on insère l'id à chaque fois que le contenu doit correspondre à celui de l'article sélectionné
      */
@@ -38,7 +38,7 @@ class FrontCategoryController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        return $this->render('front/category_show.html.twig',[
+        return $this->render('admin/admin_category_show.html.twig',[
                 'category' => $category
         ]);
     }

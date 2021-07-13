@@ -1,0 +1,29 @@
+ {% extends 'admin/admin_base.html.twig' %}
+
+ {% block metaTitle %}
+ Article n° {{ article.id }}
+ {% endblock metaTitle %}
+
+ {% block main %}
+     <main>
+         <article class="center lHeight50">
+             <h1>Titre de l'article : "{{ article.title }}"</h1>
+             <br>
+             <h2>Contenu de l'article : <br>{{ article.content }}</h2>
+             <br>
+             <a href={{ path('admin_category_show',{'id':article.category.id })}}><h1>Catégorie de l'article :
+                     {{ article.category.title }}</h1></a>
+
+             <a href={{ path('admin_tag_show',{'id':article.tag.id })}}>
+                 <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
+                         {{ article.tag.title }}</span> </h3></a>
+
+             {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
+             {% if article.isPublished == true %}
+                 <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>
+             {% else %}
+                 <p>Article non publié</p>
+             {% endif %}
+         </article>
+     </main>
+ {% endblock main %}

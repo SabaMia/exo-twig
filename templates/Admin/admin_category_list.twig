@@ -1,0 +1,20 @@
+{# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
+{% extends 'admin/admin_base.html.twig' %}
+
+{# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
+{% block metaTitle %}
+    Liste des categories
+{% endblock metaTitle %}
+
+{# j'insère un block pour la balise main puis je le ferme avec endblock #}
+{% block main %}
+    <h1 class="fsT">Liste des catégories</h1>
+    <main class="card">
+        {% for category in categories %}
+        <article class="lHeight50 category">
+            <a href={{ path('admin_category_show',{'id':category.id })}}><h2>Catégorie : "{{ category.title }}"</h2></a>
+            <p>Description de la catégorie : <br> "{{ category.description }}"</p>
+        </article>
+        {% endfor %}
+    </main>
+{% endblock main %}

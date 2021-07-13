@@ -1,0 +1,22 @@
+{# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
+{% extends 'admin/admin_base.html.twig' %}
+
+{# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
+{% block metaTitle %}
+    {{ category.title }}
+{% endblock metaTitle %}
+
+{% block main %}
+    <main>
+        <article class="center lHeight200">
+            <h1>Catégorie: "{{ category.title }}"</h1>
+            <h2>{{ category.description }}</h2>
+            <br>
+            {% for article in category.articles %}
+                <a href={{ path('admin_article_show',{'id':article.id })}}>
+                <h1>{{ article.title }}</h1>
+                </a>
+            {% endfor %}
+        </article>
+    </main>
+{% endblock main %}

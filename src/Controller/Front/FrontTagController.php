@@ -12,7 +12,7 @@ class FrontTagController extends AbstractController
 {
 
     /**
-     * @Route("/tags",name="tag")
+     * @Route("/tags",name="tags_list")
      */
     public function tagList(TagRepository $tagRepository)
     {
