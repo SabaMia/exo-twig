@@ -1,5 +1,5 @@
 {# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
 {% block metaTitle %}
@@ -13,7 +13,7 @@
             <h2>{{ category.description }}</h2>
             <br>
             {% for article in category.articles %}
-                <a href={{ path('articleShow',{'id':article.id })}}>
+                <a href={{ path('article_show',{'id':article.id })}}>
                 <h1>{{ article.title }}</h1>
                 </a>
             {% endfor %}

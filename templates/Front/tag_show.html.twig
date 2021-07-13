@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block metaTitle %}
     Tag: {{ tag.title }}
@@ -9,7 +9,7 @@
             <div class="center lHeight200">
                 <h1 style="color:{{ tag.color }};">{{ tag.title }}</h1>
                 {% for article in tag.articles %}
-                    <a href={{ path('articleShow',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
+                    <a href={{ path('article_show',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
                     <p>{{ article.title }}</p>
                 {% endfor %}
             </div>

@@ -1,5 +1,5 @@
 {# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
 {% block metaTitle %}
@@ -12,7 +12,7 @@
     <main class="card">
         {% for category in categories %}
         <article class="lHeight50 category">
-            <a href={{ path('showCategory',{'id':category.id })}}><h2>Catégorie : "{{ category.title }}"</h2></a>
+            <a href={{ path('category_show',{'id':category.id })}}><h2>Catégorie : "{{ category.title }}"</h2></a>
             <p>Description de la catégorie : <br> "{{ category.description }}"</p>
         </article>
         {% endfor %}

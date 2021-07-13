@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategoryController extends AbstractController
+class FrontCategoryController extends AbstractController
 {
 
     /**
@@ -18,13 +18,13 @@ class CategoryController extends AbstractController
     public function listCategories(CategoryRepository $categoryRepository)
     {
         $categories = $categoryRepository->findAll();
-        return $this->render('list-category.html.twig',[
+        return $this->render('front/category_list.twig',[
             'categories' => $categories
         ]);
     }
 
     /**
-     * @Route ("/category/{id}", name="showCategory")
+     * @Route ("/category/{id}", name="category_show")
      * création de la deuxième page avec sa route et la fonction qui renvoie au fichier twig correspondant
      * on insère l'id à chaque fois que le contenu doit correspondre à celui de l'article sélectionné
      */
@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        return $this->render('show-category.html.twig',[
+        return $this->render('front/category_show.html.twig',[
                 'category' => $category
         ]);
     }

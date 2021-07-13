@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block metaTitle %}
     Liste des tags
@@ -8,7 +8,7 @@
 <main class="">
     {% for tag in tags %}
     <div class="">
-        <a href="{{ path('tagShow',{'id':tag.id }) }}"><h1 style="color:{{ tag.color }}">{{ tag.title }}</h1></a>
+        <a href="{{ path('tag_show',{'id':tag.id }) }}"><h1 style="color:{{ tag.color }}">{{ tag.title }}</h1></a>
     </div><br><br>
     {% endfor %}
     </main>

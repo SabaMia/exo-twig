@@ -1,4 +1,4 @@
- {% extends 'base.html.twig' %}
+ {% extends 'front/base.html.twig' %}
 
  {% block metaTitle %}
  Article n° {{ article.id }}
@@ -11,10 +11,10 @@
              <br>
              <h2>Contenu de l'article : <br>{{ article.content }}</h2>
              <br>
-             <a href={{ path('showCategory',{'id':article.category.id })}}><h1>Catégorie de l'article :
+             <a href={{ path('category_show',{'id':article.category.id })}}><h1>Catégorie de l'article :
                      {{ article.category.title }}</h1></a>
 
-             <a href={{ path('tagShow',{'id':article.tag.id })}}>
+             <a href={{ path('tag_show',{'id':article.tag.id })}}>
                  <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
                          {{ article.tag.title }}</span></a>
 

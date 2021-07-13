@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TagController extends AbstractController
+class AdminTagController extends AbstractController
 {
 
     /**
@@ -17,13 +17,13 @@ class TagController extends AbstractController
     public function tagList(TagRepository $tagRepository)
     {
         $tags = $tagRepository->findAll();
-        return $this->render('tag_list.html.twig', [
+        return $this->render('front/tag_list.html.twig', [
             'tags' => $tags
     ]);
     }
 
     /**
-     * @Route("/tag/{id}", name="tagShow")
+     * @Route("/tag/{id}", name="tag_show")
      */
     public function tagShow($id, TagRepository $tagRepository)
     {
@@ -34,7 +34,7 @@ class TagController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        return $this->render('tag_show.html.twig',[
+        return $this->render('front/tag_show.html.twig',[
             'tag' => $tag
         ]);
     }

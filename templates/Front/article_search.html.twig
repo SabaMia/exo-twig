@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block metaTitle %}
 Votre recherche
@@ -15,7 +15,7 @@ Votre recherche
                     <h2>{{ article.title | upper }}</h2>
                     <p>{{ article.content }}</p>
                     <br>
-                    <a href="{{ path('articleShow', {'id': article.id }) }}">Voir plus</a>
+                    <a href="{{ path('article_show', {'id': article.id }) }}">Voir plus</a>
                 </article>
             {% endif %}
         {% endfor %}

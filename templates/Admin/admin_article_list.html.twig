@@ -1,0 +1,36 @@
+ {% extends 'admin/admin_base.html.twig' %}
+
+
+
+ {% block main %}
+     <main>
+         <h1 class="fsT">Liste des articles</h1>
+         <h2>Il y a {{ articles | length }} articles dans la base de données</h2>
+         <br>
+         <a href="{{ path('admin_article_insert') }}">Ajouter un article (hardcodé)</a>
+         <div class="card">
+         {% for article in articles %}
+             <article class="lHeight50 category">
+                 <a href="{{ path('admin_article_delete', {'id': article.id }) }}">Supprimer l'article</a>
+                 <br>
+                 <a href="{{ path('admin_article_update', {'id': article.id }) }}">Mettre à jour (hardcodé)</a>
+
+                 <a href={{ path('article_show',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
+                 <br>
+                 <h2>Contenu : <br> "{{ article.content }}"</h2>
+                 <a href={{ path('category_show',{'id':article.category.id })}}><h3>Catégorie de l'article :
+                         {{ article.category.title }}</h3></a>
+                 <a href={{ path('tag_show',{'id':article.tag.id })}}>
+                     <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">
+                         {{ article.tag.title }}</span></h3></a>
+                 {# Il faudra  créer une boucle if pour qu'il affiche un texte selon si il est publié ou non #}
+                 {% if article.isPublished == true %}
+                    <p>Article publié le {{ article.creationDate|date('d/m/Y H:i:s') }}</p>
+                 {% else %}
+                     <p>Article non publié</p>
+                      {% endif %}
+                 </article>
+         {% endfor %}
+         </div>
+     </main>
+ {% endblock main %}

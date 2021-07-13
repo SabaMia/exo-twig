@@ -1,7 +1,8 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Admin;
+
 
 use App\Entity\Article;
 use App\Entity\Tag;
@@ -9,18 +10,16 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleController extends AbstractController
+class AdminArticleController extends AbstractController
 {
     /**
-     * @Route("/articles/insert", name="articleInsert")
+     * @Route("/admin/articles/insert", name="admin_article_insert")
      */
     public function insertArticle(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository,
-        TagRepository $tagRepository)
+                                  TagRepository $tagRepository)
     {
         //On utilise l'entité article pur créer un nouvel article en BDD
         //une instance de l'entité = un enregistrement dans la bdd
@@ -46,12 +45,9 @@ class ArticleController extends AbstractController
             $tag->setTitle("nouveau tag");
             $tag->setColor("purple");
         }
-
         $entityManager->persist($tag);
 
         $article->setTags($tag);
-
-
 
         // On récupère l'entité créée ici et on la pré sauvegarde
         $entityManager->persist($article);
@@ -59,11 +55,11 @@ class ArticleController extends AbstractController
         // une fois toutes les entités pré sauvegardées on les insère en bdd
         $entityManager->flush();
 
-        dump('ok'); die;
+        return $this->redirectToRoute('admin_article_list');
     }
 
     /**
-     * @Route("/articles/update/{id}", name="articleUpdate")
+     * @Route("/admin/articles/update/{id}", name="admin_article_update")
      */
     // Pour créer une update, on créé une route puis la fonction
     public function updateArticle($id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository)
@@ -75,11 +71,13 @@ class ArticleController extends AbstractController
         // persist pour pré sauvegarder et flush pour valider
         $entityManager->persist($article);
         $entityManager->flush();
-        dump('ok update titre'); die;
+
+        return $this->redirectToRoute('admin_article_list');
+
     }
 
     /**
-     * @Route("/articles/delete/{id}", name="articleDelete")
+     * @Route("/admin/articles/delete/{id}", name="admin_article_delete")
      */
     //Pour supprimer un article à partir de l'id dans l'URL
     public function deleteArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
@@ -90,11 +88,12 @@ class ArticleController extends AbstractController
         $entityManager->remove($article);
         $entityManager->flush();
 
-        return $this->redirectToRoute('articleList');
+        return $this->redirectToRoute('admin_article_list');
+
     }
 
     /**
-     * @Route("/articles", name="articleList")
+     * @Route("/admin/articles", name="admin_article_list")
      */
     public function articleList(ArticleRepository $articleRepository)
     {
@@ -102,46 +101,8 @@ class ArticleController extends AbstractController
         // il faut l'instancier avec l'autowire en argument du controleur puis de la variable
         $articles = $articleRepository->findAll();
         //je lui demande de la renvoyer à ma vue
-        return $this->render('article_list.html.twig', [
+        return $this->render('admin/admin_article_list.html.twig', [
             'articles' => $articles
         ]);
     }
-    /**
-     * @Route("/article/{id}", name="articleShow")
-     */
-    public function articleShow($id, ArticleRepository $articleRepository)
-    {
-        // afficher l'article avec à partir de son id (wilcard dans l'url))
-        $article = $articleRepository->find($id);
-
-        //Erreur 404 si quelqu'un essaye de rentrer un id qui n'existe pas
-        if (is_null($article)) {
-            throw new NotFoundHttpException();
-        }
-
-        return $this->render('article_show.html.twig', [
-            'article' => $article
-        ]);
-    }
-
-    /**
-     * @Route("/search", name="search")
-     */
-    public function search(ArticleRepository $articleRepository, Request $request)
-    {
-        //On commence par tester la route
-        //dump('search');die;
-        //On fait un test avec mot présent dans un article
-        //$term = '6';
-        //on modifie le $term pour qu'il récupère la méthode get du formulaire
-        $term = $request->query->get('q');
-        $articles = $articleRepository
-            ->searchByTerm($term);
-        return $this->render('article_search.html.twig',[
-            'articles'=>$articles,
-            'term'=>$term]);
-        //Ensuite on va modifier le fichier ArticleRepository pour créer la requête
-    }
-
-
 }
