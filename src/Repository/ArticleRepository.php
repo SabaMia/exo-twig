@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,7 +40,6 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery();
         return $query->getResult();
         //ensuite il faut aller personnaliser le fichier twig pour afficher le résultat de la recheche
-
     }
 
     // /**

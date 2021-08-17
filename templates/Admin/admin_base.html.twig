@@ -17,15 +17,28 @@
     <body>
         <header>
             <nav>
-                <div>
-                    <img src={{ asset('media/logo.png') }} alt="logo" class="resp">
+                <div class="logo">
+                    <img src="{{ asset('media/logo.png') }}" alt="logo" class="resp">
                 </div>
-                {# insertion d'un formalaire avec une méthode get afin de récupérer le mot tapé dans la recherche #}
-                <div>
-                    <a href={{ path('admin_article_list',)}}><img src={{ asset('media/menu.png') }} alt="menu" class="resp"></a>
-
+                {# insertion d'un formulaire avec une méthode get afin de récupérer le mot tapé dans la recherche #}
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                <div >
+                    {#<a href={{ path('admin_article_list',)}}><img src={{ asset('media/menu.png') }} alt="menu" class="resp"></a>#}
+                    <a class="" href="{{ path('admin_article_list') }}">Gestion des articles</a>
+                    <a class="" href="{{ path('admin_category_list') }}">Gestion des catégories</a>
+                    <a class="" href="{{ path('admin_tags_list') }}">Gestion des tags</a>
                 </div>
             </nav>
+            {#        Créer un message flash pour annoncer le succès ou les erreurs du crud#}
+            <div>
+                {% for message in app.flashes('success') %}
+                    <div class="flash-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+
         </header>
         {% block main %}
         {# le contenu des articles contenu dans leurs balises main s'affichera ici #}

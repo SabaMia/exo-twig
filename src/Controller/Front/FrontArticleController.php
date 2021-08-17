@@ -13,6 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontArticleController extends AbstractController
 {
     /**
+     * @Route("/", name="home")
+     */
+
+    public function home()
+    {
+        return $this->render('front/home.html.twig');
+    }
+
+
+    /**
      * @Route("/articles", name="article_list")
      */
     public function articleList(ArticleRepository $articleRepository)

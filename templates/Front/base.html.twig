@@ -17,17 +17,21 @@
     <body>
         <header>
             <nav>
-                <div>
-                    <img src={{ asset('media/logo.png') }} alt="logo" class="resp">
+                <div class="logo">
+                    <img src="{{ asset('media/logo.png') }}" alt="logo" class="resp">
                 </div>
                 {# insertion d'un formalaire avec une méthode get afin de récupérer le mot tapé dans la recherche #}
                 <form action="{{ path('search') }}" method="get">
-                    <input type="text" name="q" placeholder="recherche...">
+                    <input type="text" name="q" id="q" placeholder="recherche...">
+                    <label for="q"></label>
                     <input type="submit" value="Rechercher">
                 </form>
                 {# Ensuite il faut aller modifier la route search dans ArticleController #}
+                <a href="{{ path('app_login') }}">Se connecter</a>
                 <div>
-                    <a href={{ path('article_list',)}}><img src={{ asset('media/menu.png') }} alt="menu" class="resp"></a>
+                    <a class="" href="{{ path('article_list') }}">Liste des articles</a>
+                    <a class="" href="{{ path('category_list') }}">Liste des catégories</a>
+                    <a class="" href="{{ path('tags_list') }}">Liste des tags</a>
                 </div>
             </nav>
         </header>

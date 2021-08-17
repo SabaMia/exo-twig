@@ -1,0 +1,14 @@
+{# j'insère le lien qui mène au fichier BASE avec un extends pour qu'il récupère le layout#}
+{% extends 'front/base.html.twig' %}
+
+{# j'insère un block pour la balise meta title puis je le ferme avec endblock #}
+{% block metaTitle %}
+    Accueil
+{% endblock metaTitle %}
+
+{# j'insère un block pour la balise main puis je le ferme avec endblock #}
+{% block main %}
+    <main>
+        <h1 class="fsT">Bienvenue sur notre page</h1>
+    </main>
+{% endblock main %}

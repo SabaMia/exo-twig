@@ -3,6 +3,16 @@
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+    color:black;
+}
+
+a:hover{
+    text-decoration: none;
+    color:rgba(255, 56, 96, 1);
+}
+
 body{
     align-items: center;
     text-align: center;
@@ -16,42 +26,34 @@ body{
     padding-bottom: 100px;
 }
 
-nav {
+footer {
     height: 10vh;
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    width:100%;
+    padding-top:50px;
+}
+
+main{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+nav {
+    height: 15vh;
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-
-}
-nav div{
-    width: 60px;
 }
 
-.resp{
-    width: 100%;
-    height: auto;
-}
-
-.lHeight200{
-    font-size: 20px;
-    line-height: 50px;
-}
-
-.lHeight50{
-    font-size: 20px;
-    line-height: 50px;
-}
-
-a{
-    text-decoration: none;
-    color:white;
-}
-
-a:hover{
-    text-decoration: none;
-    color:rgba(255, 56, 96, 1);
+nav div a{
+    font-size: 30px;
+    width: 250px;
+    flex-wrap: wrap;
+    margin: 0 20px;
 }
 
 .category{
@@ -69,24 +71,27 @@ a:hover{
     flex-wrap: wrap;
 }
 
-footer {
-    height: 10vh;
-    position: absolute;
-    bottom: 0;
-    background-color: white;
-    width:100%;
-    padding-top:50px;
-    height:50px;
-}
-
 .fsT{
     text-align: center;
 
     padding-top: 50px;
 }
 
-main{
-    padding-left: 100px;
-    padding-right: 100px;
+.lHeight200{
+    font-size: 20px;
+    line-height: 50px;
 }
 
+.lHeight50{
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.logo{
+    width: 60px;
+}
+
+.resp{
+    width: 100%;
+    height: auto;
+}

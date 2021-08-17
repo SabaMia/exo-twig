@@ -5,16 +5,16 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\Article;
-use App\Entity\Tag;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminArticleController extends AbstractController
 {
@@ -22,7 +22,7 @@ class AdminArticleController extends AbstractController
      * @Route("/admin/articles/insert", name="admin_article_insert")
      */
 
-    public function insertArticle(Request $request, EntityManagerInterface $entityManager)
+    public function insertArticle(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
 
         //On utilise l'entité article pur créer un nouvel article en BDD
@@ -37,15 +37,51 @@ class AdminArticleController extends AbstractController
         // obligatoires sont remplis correctement), alors on enregistre l'article
         // créé en bdd
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+
+            /** @var UploadedFile $brochureFile */
+            $imageFile = $articleForm->get('imageFile')->getData();
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $article->setImageFilename($newFilename);
+            }
+
+
+
+            //permet de stocker en session un message flash,
+            // dans le but de l'afficher sur la page suivante
+            $this->addFlash(
+                'success',
+                'L\'article ' . $article->getTitle() . ' a bien été créé !'
+            );
             $entityManager->persist($article);
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_article_list');
         }
-        return $this->render('admin/admin_insert.html.twig', [
+        return $this->render('admin/admin_insert_article.html.twig', [
             'articleForm' => $articleForm->createView()
         ]);
     }
+
+
         /*public function insertArticle(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository,
                                   TagRepository $tagRepository)
     {*/
@@ -91,12 +127,34 @@ class AdminArticleController extends AbstractController
         //On indique quel article il va récupérer grace au repository article et son id
         $article = $articleRepository->find($id);
         // pour modifier le titre
-        $article->setTitle('update du titre');
-        // persist pour pré sauvegarder et flush pour valider
-        $entityManager->persist($article);
-        $entityManager->flush();
+        //$article->setTitle('update du titre');
+        // on génère le formulaire en utilisant le gabarit + une instance de l'entité Article
+        $articleForm = $this->createForm(ArticleType::class, $article);
 
-        return $this->redirectToRoute('admin_article_list');
+        // persist pour pré sauvegarder et flush pour valider
+        /*$entityManager->persist($article);
+        $entityManager->flush();*/
+        //$this->redirectToRoute('admin_article_list');
+
+        // si le formulaire a été posté et qu'il est valide (que tous les champs
+        // obligatoires sont remplis correctement), alors on enregistre l'article
+        // créé en bdd
+        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+            //permet de stocker en session un message flash,
+            // dans le but de l'afficher sur la page suivante
+            $this->addFlash(
+                'success',
+                'L\'article '. $article->getTitle().' a bien été modifié !'
+            );
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_article_list');
+        }
+
+        return $this->render('admin/admin_insert_article.html.twig', [
+            'articleForm' => $articleForm->createView()
+        ]);
     }
 
     /**
@@ -107,6 +165,12 @@ class AdminArticleController extends AbstractController
     {
         //le repository pour récupérer l'article à partir de son id dans l'URL
         $article = $articleRepository->find($id);
+        //permet de stocker en session un message flash,
+        // dans le but de l'afficher sur la page suivante
+        $this->addFlash(
+            'success',
+            'L\'article '. $article->getTitle().' a bien été supprimé !'
+        );
         //puis les entity manager pour supprimer (remove) puis valider (flush)
         $entityManager->remove($article);
         $entityManager->flush();

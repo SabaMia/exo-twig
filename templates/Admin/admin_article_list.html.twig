@@ -18,7 +18,7 @@
                  <a href={{ path('article_show',{'id':article.id })}}><h1>{{ article.title }}</h1></a>
                  <br>
                  <h2>Contenu : <br> "{{ article.content }}"</h2>
-                 <a href={{ path('category_show',{'id':article.category.id })}}><h3>Catégorie de l'article :
+                 <a href={{ path('admin_category_show',{'id':article.category.id })}}><h3>Catégorie de l'article :
                          {{ article.category.title }}</h3></a>
                  <a href={{ path('tag_show',{'id':article.tag.id })}}>
                      <h3>Tag de l'article : <span style="color:{{ article.tag.color }}">

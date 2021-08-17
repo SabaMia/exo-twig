@@ -2,9 +2,9 @@
 
 
 namespace App\Entity;
-
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -21,11 +21,15 @@ class Article
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Le champ titre n'est pas rempli")
+     * @Assert\Length(min=3, minMessage="Le titre n'est pas assez long")
      */
+
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le champ contenu n'est pas rempli")
      */
     private $content;
 
@@ -55,7 +59,7 @@ class Article
     /**
      * @param mixed $tag
      */
-    public function setTags($tag): void
+    public function setTag($tag): void
     {
         $this->tag = $tag;
     }
@@ -145,6 +149,11 @@ class Article
      */
     private $isPublished;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFilename;
+
     public function getIsPublished(): ?bool
     {
         return $this->isPublished;
@@ -153,6 +162,18 @@ class Article
     public function setIsPublished(?bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
+    }
+
+    public function setImageFilename(?string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }

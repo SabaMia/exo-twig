@@ -6,10 +6,23 @@
 
 {% block main %}
 <main class="">
+    <h1 class="fsT">Liste des tags</h1>
+    <br>
+    <a href="{{ path('admin_tag_insert') }}" >
+        <p class="btn-ajout">Ajouter un tag</p>
+    </a>
+    <br>
     {% for tag in tags %}
     <div class="">
         <a href="{{ path('admin_tag_show',{'id':tag.id }) }}"><h1 style="color:{{ tag.color }}">{{ tag.title }}</h1></a>
-    </div><br><br>
+    </div>
+        <a class="tag-modif-suppr" href="{{ path('adminTagUpdate', {'id': tag.id}) }}">
+            <p>Modifier</p>
+        </a>
+        <a class="tag-modif-suppr ml-10" href="{{ path('adminTagDelete', {'id': tag.id}) }}">
+            <p>Supprimer</p>
+        </a>
+        <br><br>
     {% endfor %}
     </main>
 {% endblock %}
